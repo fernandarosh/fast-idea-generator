@@ -1,6 +1,10 @@
 import { useState } from "react";
-import { Zap, Layers, Maximize, Divide, Plus, Minus, Repeat, LogIn, AlertTriangle } from "lucide-react";
+import {
+  Zap, Layers, Maximize, Divide, Plus,
+  Minus, Repeat, LogIn, AlertTriangle
+} from "lucide-react";
 
+// Estilos por tipo de generador
 const generatorStyles = {
   "Inversión": { icon: <Zap className="inline w-5 h-5 mr-2" />, color: "bg-red-100 text-red-800" },
   "Integración": { icon: <Layers className="inline w-5 h-5 mr-2" />, color: "bg-blue-100 text-blue-800" },
@@ -13,16 +17,131 @@ const generatorStyles = {
   "Exageración": { icon: <AlertTriangle className="inline w-5 h-5 mr-2" />, color: "bg-orange-100 text-orange-800" }
 };
 
-// trends debe ser pegado aquí si quieres incluir todo
+// Contenido de las tendencias y cartas
+const trends = {
+  fricase: {
+    name: "🌩️ Fricasé de Voltaje",
+    cards: [
+      {
+        type: "Inversión",
+        description: "Dar la vuelta al planteamiento común",
+        question: "¿Y si transformamos en lugar de comprar?",
+        example: "El gobierno apoya kits para convertir autos de combustión en eléctricos."
+      },
+      {
+        type: "Integración",
+        description: "Integrar la oferta con otras ofertas",
+        question: "¿Y si las estaciones de carga fueran también centros comunitarios?",
+        example: "Mercados locales o coworkings móviles en puntos de carga."
+      },
+      {
+        type: "Extensión",
+        description: "Extender la oferta",
+        question: "¿Y si los autos eléctricos también fueran baterías vecinales?",
+        example: "Almacenan energía y abastecen casas cuando están estacionados."
+      },
+      {
+        type: "Diferenciación",
+        description: "Segmentar la oferta",
+        question: "¿Y si tuviéramos autos eléctricos comunitarios rurales?",
+        example: "Modelos accesibles para caminos sin pavimentar y energía solar."
+      },
+      {
+        type: "Adición",
+        description: "Agregar un nuevo elemento",
+        question: "¿Y si cada auto eléctrico tuviera sensores ambientales?",
+        example: "Mapeo ciudadano de calidad del aire en tiempo real."
+      },
+      {
+        type: "Sustracción",
+        description: "Eliminar un elemento",
+        question: "¿Y si nadie pudiera tener auto privado?",
+        example: "Solo flotas compartidas o comunitarias permitidas."
+      },
+      {
+        type: "Traducción",
+        description: "Aplicar una práctica de otro campo",
+        question: "¿Y si aplicamos mantenimiento predictivo como en aviación?",
+        example: "Flotas eléctricas gestionadas por IA para prevenir fallos."
+      },
+      {
+        type: "Injerto",
+        description: "Insertar una práctica externa",
+        question: "¿Y si diseñamos barrios energéticos como ecosistemas agrícolas?",
+        example: "Autos, techos solares y parques producen y almacenan energía en red."
+      },
+      {
+        type: "Exageración",
+        description: "Empujar a su estado más extremo",
+        question: "¿Y si en 3 años se prohíben todos los autos de combustión?",
+        example: "Transición obligatoria a movilidad eléctrica en todas las ciudades."
+      }
+    ]
+  },
+  fermentacion: {
+    name: "🧵 Fermentación de Fibras",
+    cards: [
+      {
+        type: "Inversión",
+        description: "Dar la vuelta al planteamiento común",
+        question: "¿Y si el residuo fuera el origen?",
+        example: "La ropa nueva se crea solo a partir de textiles desechados."
+      },
+      {
+        type: "Integración",
+        description: "Integrar la oferta con otras ofertas",
+        question: "¿Y si cada prenda tuviera un pasaporte digital?",
+        example: "Historial visible de origen, transformación y reciclaje."
+      },
+      {
+        type: "Extensión",
+        description: "Extender la oferta",
+        question: "¿Y si compostar ropa fuera parte del reciclaje cotidiano?",
+        example: "Máquinas de fermentación textil en supermercados."
+      },
+      {
+        type: "Diferenciación",
+        description: "Segmentar la oferta",
+        question: "¿Y si las marcas compitieran por durabilidad?",
+        example: "Premios a prendas más reparadas y modulares."
+      },
+      {
+        type: "Adición",
+        description: "Agregar un nuevo elemento",
+        question: "¿Y si la ropa incluyera sensores biodegradables?",
+        example: "Te avisa cuándo compostarla o repararla."
+      },
+      {
+        type: "Sustracción",
+        description: "Eliminar un elemento",
+        question: "¿Y si prohibimos las mezclas sintéticas no reciclables?",
+        example: "Todas las telas deben poder reintegrarse al ecosistema."
+      },
+      {
+        type: "Traducción",
+        description: "Aplicar una práctica de otro campo",
+        question: "¿Y si usamos fermentación microbiana como en la comida?",
+        example: "Transformar ropa usada en nuevas fibras regeneradas."
+      },
+      {
+        type: "Injerto",
+        description: "Insertar una práctica externa",
+        question: "¿Y si injertamos economía del cuidado en la moda?",
+        example: "Valorar saberes textiles locales y empleo digno por encima de la velocidad."
+      },
+      {
+        type: "Exageración",
+        description: "Empujar a su estado más extremo",
+        question: "¿Y si cada prenda tuviera fecha de muerte ecológica?",
+        example: "Todo lo que uses debe indicar cuándo y cómo se reintegrará a la Tierra."
+      }
+    ]
+  }
+};
 
 export default function FastIdeaGenerator() {
   const [selectedTrend, setSelectedTrend] = useState(null);
   const [currentCard, setCurrentCard] = useState(null);
-
-  const selectTrend = (trendKey) => {
-    setSelectedTrend(trendKey);
-    drawCard(trendKey);
-  };
 
   const drawCard = (trendKey) => {
     const cards = trends[trendKey].cards;
@@ -45,13 +164,19 @@ export default function FastIdeaGenerator() {
         <div className="space-y-4">
           <p className="text-lg">¿Sobre qué tema quieres idear?</p>
           <button
-            onClick={() => selectTrend("fricase")}
+            onClick={() => {
+              setSelectedTrend("fricase");
+              drawCard("fricase");
+            }}
             className="bg-blue-500 text-white px-6 py-2 rounded-xl shadow-lg"
           >
             🌩️ Fricasé de Voltaje
           </button>
           <button
-            onClick={() => selectTrend("fermentacion")}
+            onClick={() => {
+              setSelectedTrend("fermentacion");
+              drawCard("fermentacion");
+            }}
             className="bg-green-500 text-white px-6 py-2 rounded-xl shadow-lg"
           >
             🧵 Fermentación de Fibras
