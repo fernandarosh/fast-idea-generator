@@ -61,7 +61,7 @@ export default function FastIdeaGenerator() {
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold">{trends[selectedTrend].name}</h2>
           {currentCard && (
-            <div className={\`border rounded-2xl p-6 shadow-xl max-w-lg \${cardStyle.color}\`}>
+            <div className={"border rounded-2xl p-6 shadow-xl max-w-lg " + (cardStyle.color || "")}>
               <p className="text-xl font-bold mb-1">
                 {cardStyle.icon}{currentCard.type}
               </p>
