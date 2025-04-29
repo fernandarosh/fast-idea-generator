@@ -155,7 +155,13 @@ export default function FastIdeaGenerator() {
   };
 
   const cardStyle = currentCard ? generatorStyles[currentCard.type] : {};
+import { useEffect } from "react"; // asegúrate de que esté importado arriba
 
+useEffect(() => {
+  if (selectedTrend && trends[selectedTrend]) {
+    drawCard(selectedTrend);
+  }
+}, [selectedTrend]);
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white p-4 text-center">
       <h1 className="text-3xl font-bold mb-8">Fast Idea Generator</h1>
@@ -164,18 +170,14 @@ export default function FastIdeaGenerator() {
         <div className="space-y-4">
           <p className="text-lg">¿Sobre qué tema quieres idear?</p>
           <button
-            onClick={() => {
-              setSelectedTrend("fricase");
-              drawCard("fricase");
+        onClick={() => setSelectedTrend("fricase")}
             }}
             className="bg-blue-500 text-white px-6 py-2 rounded-xl shadow-lg"
           >
             🌩️ Fricasé de Voltaje
           </button>
           <button
-            onClick={() => {
-              setSelectedTrend("fermentacion");
-              drawCard("fermentacion");
+             onClick={() => setSelectedTrend("fermentacion")}
             }}
             className="bg-green-500 text-white px-6 py-2 rounded-xl shadow-lg"
           >
