@@ -50,6 +50,8 @@ const trends = {
         question: "¿Y si cada auto eléctrico tuviera sensores ambientales?",
         example: "Mapeo ciudadano de calidad del aire en tiempo real."
       },
-      {
-        type: "Sustracción",
-        description: "Eliminar un elemento
+{
+  type: "Sustracción",
+  description: "Eliminar un elemento",
+
+
